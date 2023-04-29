@@ -20,15 +20,14 @@ router.get('/',(req, res)=>{
 router.get('/:nombre',async(req, res)=>{
     const {nombre} = req.params;
     const result = data.dataLibrary.perros.filter(perro => perro.nombre_perro == nombre);
-    if (result.length > 0) {
-      const perros = await fetch(`http://premios:4000/api/v1/premios/raza/${id}`);
-      const perrosJson = await perros.json();
-      const razaInfo = result[0];
+    if (result) {
+      
 
         const response = {
           servicio: "perros",
           total: result.length,
-          data: result
+          data: result,
+          
         }
         res.send(response);
       } else {
@@ -36,21 +35,26 @@ router.get('/:nombre',async(req, res)=>{
       }
 });
 
+//punto 2
 router.get('/raza/:raza', (req, res) =>{
   const {raza} = req.params;
   const result = data.dataLibrary.perros.filter(razas => razas.raza == raza);
-  
-  if (result) {
+  if (result.length > 0) {
+    const pesoPromedio = result.reduce((acc, perro) => acc + perro.peso, 0)/ result.length;
     const response = {
       servicio: "perros",
       total: result.length,
-      data: result
+      pesoPromedio: pesoPromedio,
+      data: result,
+      
     }
     res.send(response);
   } else {
     res.status(404).send('raza no encontrado');
   }
 });
+
+
 
 router.get('/paisAmo/:pais', (req, res) =>{
   const {pais} = req.params;
