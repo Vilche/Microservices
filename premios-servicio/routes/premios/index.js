@@ -36,8 +36,8 @@ const db = new sqlite3.Database('data/premios.db', (err) => { // inicio de la co
 
   router.get('/:id', (req, res) =>{
     const {id} = req.params;
-    const result = info.filter(premio => premio.id == id)
-
+    const result = info.filter(premio => premio.id_campeon == id)
+    
     if (result) {
       const response = {
         servicio: "razas",
@@ -46,7 +46,7 @@ const db = new sqlite3.Database('data/premios.db', (err) => { // inicio de la co
       }
       res.send(response);
     } else {
-      res.status(404).send('Premio no encontrado');
+      res.status(404).send('Este perro no contiene premios');
     }
 
   });

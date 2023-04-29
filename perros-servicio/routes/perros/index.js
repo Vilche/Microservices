@@ -16,11 +16,15 @@ router.get('/',(req, res)=>{
     res.send(response);
 });
 
-router.get('/:id',(req, res)=>{
-    const {id} = req.params;
-    const result = data.dataLibrary.perros.filter(perro => perro.Id == id);
+//punto tres
+router.get('/:nombre',async(req, res)=>{
+    const {nombre} = req.params;
+    const result = data.dataLibrary.perros.filter(perro => perro.nombre_perro == nombre);
+    if (result.length > 0) {
+      const perros = await fetch(`http://premios:4000/api/v1/premios/raza/${id}`);
+      const perrosJson = await perros.json();
+      const razaInfo = result[0];
 
-    if (result) {
         const response = {
           servicio: "perros",
           total: result.length,
