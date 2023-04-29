@@ -40,7 +40,7 @@ const db = new sqlite3.Database('data/premios.db', (err) => { // inicio de la co
     
     if (result) {
       const response = {
-        servicio: "razas",
+        servicio: "premios",
         total: result.length,
         data: result
       }

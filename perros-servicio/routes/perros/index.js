@@ -21,19 +21,24 @@ router.get('/:nombre',async(req, res)=>{
     const {nombre} = req.params;
     const result = data.dataLibrary.perros.filter(perro => perro.nombre_perro == nombre);
     if (result) {
+      const { id } = result;
+      const premios = await fetch(`http://premios:4000/api/v1/premios?id_campeon=${id}`);
+      const premiosJson = await premios.json();
       
-
         const response = {
           servicio: "perros",
           total: result.length,
           data: result,
-          
+          premios: premiosJson
+         
         }
         res.send(response);
       } else {
         res.status(404).send('perro no encontrado');
       }
 });
+
+
 
 //punto 2
 router.get('/raza/:raza', (req, res) =>{
